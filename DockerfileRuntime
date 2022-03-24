@@ -1,0 +1,31 @@
+# FROM https://github.com/ceccocats/tkDNN/issues/221#issuecomment-824648044
+
+ARG BASE_IMAGE=louiswe/deepstream-zed:0.1
+
+FROM ${BASE_IMAGE}
+
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+    libyaml-cpp0.5v5 python3-numpy \
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# install opencv
+COPY ./opencv3/OpenCV-*-aarch64.sh /tmp/
+RUN /tmp/OpenCV-*-aarch64.sh --skip-license --prefix=/usr/local \
+    && rm /tmp/OpenCV-*-aarch64.sh
+
+# install tkdnn
+# COPY --from=builder /usr/local/tkdnn /usr/local/tkdnn
+# RUN echo "/usr/local/tkdnn/lib" > /etc/ld.so.conf.d/tkdnn.conf \
+#     && ldconfig
+# ENV PATH=$PATH:/usr/local/tkdnn/bin
+
+COPY ./tkdnn3/bin /usr/local/bin
+COPY ./tkdnn3/lib /usr/local/lib
+
+WORKDIR /usr/local/src
+
+RUN git clone --depth 1 --branch tensorrt8 https://github.com/ceccocats/tkDNN.git
