@@ -1,6 +1,8 @@
 SHELL:=/bin/bash
 CUR_DIR=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
+detect:
+	cd /usr/local/src/tkDNN/build && ./demo demoConfig.yml
 
 builder:
 	echo "build Builder"
@@ -15,12 +17,15 @@ builder:
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		-v $(CUR_DIR)/opencv3/:/usr/local/src/opencv_build/ \
 		-v $(CUR_DIR)/tkdnn3/:/usr/local/tkdnn/ \
-		-v $(CUR_DIR)/tkdnn_build/:/usr/local/src/tkdnn_build/ \
+		-v $(CUR_DIR)/tkdnn_build/:/usr/local/src/tkDNN/build/ \
 		--device /dev/video0 \
 		tensorrt-yolo-builder /bin/sh -c "ls /usr/local/src/ && make prepareRuntime"
 
 removeBuilder:
 	docker image rm tensorrt-yolo-builder
+
+compileTensorNetwork:
+	cd /usr/local/src/tkDNN/build && rm yolo4_fp32.rt && ./test-yolo4
 
 compileOpencv:
 	echo "build opencv"
@@ -63,7 +68,7 @@ compileTkdnn:
 
 
 
-prepareRuntime: compileOpencv compileTkdnn
+prepareRuntime: compileOpencv compileTkdnn compileTensorNetwork
 
 
 runtime:
