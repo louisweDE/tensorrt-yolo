@@ -25,7 +25,7 @@ removeBuilder:
 	docker image rm tensorrt-yolo-builder
 
 compileTensorNetwork:
-	cd /usr/local/src/tkDNN/build && rm yolo4_fp32.rt && ./test-yolo4
+	cd /usr/local/src/tkDNN/build && ./test-yolo4
 
 compileOpencv:
 	echo "build opencv"
@@ -58,7 +58,8 @@ compileOpencv:
 compileTkdnn:
 	echo "build tkdnn"
 
-	cd /usr/local/src/tkdnn_build && cmake \
+	mkdir -p /usr/local/src/tkDNN/build
+	cd /usr/local/src/tkDNN/build && cmake \
     		-G Ninja \
     		-D CMAKE_INSTALL_PREFIX=/usr/local/tkdnn \
     		/usr/local/src/tkDNN
