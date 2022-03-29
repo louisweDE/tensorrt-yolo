@@ -54,9 +54,11 @@ RUN git clone --depth 1 --branch ${TTAG} https://github.com/ceccocats/tkDNN.git 
 
 RUN mkdir /usr/local/opencv
 
-COPY ./demo.cpp /usr/local/src/tkDNN/demo/demo/demo.cpp
-COPY ./demoConfig.yml /usr/local/src/tkDNN/build/demoConfig.yml
+COPY ./demo.cpp /tmp/demo.cpp 
+#file destionation /usr/local/src/tkDNN/demo/demo/demo.cpp
+COPY ./demoConfig.yml /tmp/demoConfig.yml 
+#file destination /usr/local/src/tkDNN/build/demoConfig.yml
 COPY ./Makefile Makefile
 
-RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.7/ZED_SDK_Tegra_L4T32.7_v3.7.1.run
-RUN chmod +x ZED_SDK_Tegra_L4T32.7_v3.7.1.run && ./ZED_SDK_Tegra_L4T32.7_v3.7.1.run -- silent
+#RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.7/ZED_SDK_Tegra_L4T32.7_v3.7.1.run
+#RUN chmod +x ZED_SDK_Tegra_L4T32.7_v3.7.1.run && ./ZED_SDK_Tegra_L4T32.7_v3.7.1.run -- silent
