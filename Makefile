@@ -28,7 +28,7 @@ removeBuilder:
 	rm -r $(CUR_DIR)/tkdnn_build
 
 compileTensorNetwork:
-	cd /usr/local/src/tkDNN/build && ./test-yolo4x
+	cd /usr/local/src/tkDNN/build && ./test_yolo4
 
 compileOpencv:
 	echo "build opencv"
