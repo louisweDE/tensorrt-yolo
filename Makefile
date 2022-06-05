@@ -51,7 +51,7 @@ compileOpencv:
     		-D WITH_GSTREAMER_0_10=OFF \
     		-D WITH_TBB=ON \
 		-D WITH_GTK=ON \
-    		../opencv
+    		-D WITH_VULKAN= ON ../opencv
 
 	cd /usr/local/src/opencv_build && ninja -j12 \
     		&& ninja install -j12 \
@@ -65,7 +65,9 @@ compileTkdnn:
 	cd /usr/local/src/tkDNN/build && cmake \
     		-G Ninja \
     		-D CMAKE_INSTALL_PREFIX=/usr/local/tkdnn \
-    		/usr/local/src/tkDNN
+    		-D CMAKE_BUILD_TYPE=Release \
+		-D ENABLE_OPENCV_CUDA_CONTRIB=ON \
+		/usr/local/src/tkDNN
 
 	cd /usr/local/src/tkDNN/build && ninja -j4 \
 		&& ninja install -j4
@@ -89,3 +91,15 @@ start:
 		--volume="$$HOME/.Xauthority:/home/developer/.Xauthority:rw" \
 		tensorrt-yolo
 
+startBuilder:
+	xhost +
+
+	docker run -it --rm --net=host --runtime nvidia \
+		-e DISPLAY=$DISPLAY \
+		-v /tmp/.X11-unix/:/tmp/.X11-unix \
+		--device /dev/video0 \
+		--volume="$$HOME/.Xauthority:/home/developer/.Xauthority:rw" \
+		-v $(CUR_DIR)/tkdnn3/:/usr/local/tkdnn/ \
+		-v $(CUR_DIR)/tkdnn_build/:/usr/local/src/tkDNN/build/ \
+		-v $(CUR_DIR)/demoConfig.yml:/usr/local/src/tkDNN/build/demoConfig.yml \
+		tensorrt-yolo-builder

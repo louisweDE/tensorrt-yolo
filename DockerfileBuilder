@@ -40,9 +40,9 @@ RUN git clone --depth 1 --branch ${CVTAG} https://github.com/opencv/opencv.git \
 
 # TKDNN
 WORKDIR /usr/local/src
-ARG TTAG=tensorrt8
+ARG TTAG=master
 RUN git clone --depth 1 --branch ${TTAG} https://github.com/ceccocats/tkDNN.git \
-    && mkdir tkdnn_build
+    && mkdir -p tkDNN/build
 
 #WORKDIR /usr/local/src/tkdnn_build
 #RUN cmake \
@@ -54,10 +54,8 @@ RUN git clone --depth 1 --branch ${TTAG} https://github.com/ceccocats/tkDNN.git 
 
 RUN mkdir /usr/local/opencv
 
-COPY ./demo.cpp /tmp/demo.cpp 
-#file destionation /usr/local/src/tkDNN/demo/demo/demo.cpp
-COPY ./demoConfig.yml /tmp/demoConfig.yml 
-#file destination /usr/local/src/tkDNN/build/demoConfig.yml
+#COPY ./demo.cpp /usr/local/src/tkDNN/demo/demo/demo.cpp
+#COPY ./demoConfig.yml /usr/local/src/tkDNN/build/demoConfig.yml
 COPY ./Makefile Makefile
 
 #RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.7/ZED_SDK_Tegra_L4T32.7_v3.7.1.run
