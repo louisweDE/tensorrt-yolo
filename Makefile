@@ -89,6 +89,10 @@ configureForTx2:
 	sed -i 's/\/dev\/video0/\/dev\/video1/g' Makefile
 	sed -i 's/\/dev\/video0/\/dev\/video1/g' demoConfig.yml
 
+resetConfiguration:
+	sed -i 's/\/dev\/video1/\/dev\/video0/g' Makefile
+	sed -i 's/\/dev\/video1/\/dev\/video0/g' demoConfig.yml
+
 start:
 	xhost +
 
@@ -97,6 +101,7 @@ start:
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		--device /dev/video0 \
 		--volume="$$HOME/.Xauthority:/home/developer/.Xauthority:rw" \
+		-v $(CUR_DIR)/demoConfig.yml:/usr/local/src/tkDNN/build/demoConfig.yml \
 		tensorrt-yolo
 
 startBuilder:
