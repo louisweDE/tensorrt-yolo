@@ -77,9 +77,17 @@ compileTkdnn:
 prepareRuntime: compileOpencv compileTkdnn compileTensorNetwork
 
 
-runtime:
+buildRuntime:
 	echo "build runtime"
 	docker build . -t tensorrt-yolo -f DockerfileRuntime
+
+pullRuntime:
+	docker pull louiswe/tensorrt-yolo:latest
+	docker tag louiswe/tensorrt-yolo:latest tensorrt-yolo
+
+configureForTx2:
+	sed -i 's/\/dev\/video0/\/dev\/video1/g' Makefile
+	sed -i 's/\/dev\/video0/\/dev\/video1/g' demoConfig.yml
 
 start:
 	xhost +
@@ -87,7 +95,6 @@ start:
 	docker run -it --rm --net=host --runtime nvidia \
 		-e DISPLAY=$DISPLAY \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
-		--device /dev/video1 \
 		--device /dev/video0 \
 		--volume="$$HOME/.Xauthority:/home/developer/.Xauthority:rw" \
 		tensorrt-yolo
