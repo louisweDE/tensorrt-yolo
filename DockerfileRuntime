@@ -1,5 +1,3 @@
-# FROM https://github.com/ceccocats/tkDNN/issues/221#issuecomment-824648044
-
 ARG BASE_IMAGE=louiswe/deepstream-zed:0.1
 
 FROM ${BASE_IMAGE}
@@ -18,14 +16,16 @@ RUN /tmp/OpenCV-*-aarch64.sh --skip-license --prefix=/usr/local \
     && rm /tmp/OpenCV-*-aarch64.sh
 
 # install tkdnn
-# COPY --from=builder /usr/local/tkdnn /usr/local/tkdnn
-# RUN echo "/usr/local/tkdnn/lib" > /etc/ld.so.conf.d/tkdnn.conf \
-#     && ldconfig
-# ENV PATH=$PATH:/usr/local/tkdnn/bin
-
 COPY ./tkdnn3/bin /usr/local/bin
 COPY ./tkdnn3/lib /usr/local/lib
 
 WORKDIR /usr/local/src
 
 RUN git clone --depth 1 --branch master https://github.com/ceccocats/tkDNN.git
+
+RUN mkdir tkDNN/build
+COPY ./tkdnn_build tkDNN/build
+COPY ./Makefile Makefile
+COPY ./demoConfig.yml tkDNN/build/demoConfig.yml
+
+ENTRYPOINT export DISPLAY=:1 && /bin/bash

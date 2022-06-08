@@ -87,6 +87,7 @@ start:
 	docker run -it --rm --net=host --runtime nvidia \
 		-e DISPLAY=$DISPLAY \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
+		--device /dev/video1 \
 		--device /dev/video0 \
 		--volume="$$HOME/.Xauthority:/home/developer/.Xauthority:rw" \
 		tensorrt-yolo

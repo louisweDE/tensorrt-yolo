@@ -1,6 +1,6 @@
 # video input
-input     : "./test.jpg"
-win_input : "./test.jpg"
+input     : "/dev/video0"
+win_input : "/dev/video0"
 
 zed_camera : true
 
