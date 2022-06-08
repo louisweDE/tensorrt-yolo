@@ -1,16 +1,13 @@
 # video input
 input     : "/dev/video0"
-win_input : "/dev/video0"
 
 zed_camera : true
 
 #cfg input
 cfg_input : "../tests/darknet/cfg/yolo4.cfg"
-cfg_win_input : "..\\..\\..\\tests\\darknet\\cfg\\yolo4.cfg"
 
 #name input
 name_input : "../tests/darknet/names/coco.names"
-name_win_input : "..\\..\\..\\tests\\darknet\\names\\coco.names"
 
 # network config
 net         : "yolo4_fp32.rt"
