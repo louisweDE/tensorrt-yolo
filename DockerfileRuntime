@@ -21,11 +21,14 @@ COPY ./tkdnn3/lib /usr/local/lib
 
 WORKDIR /usr/local/src
 
-RUN git clone --depth 1 --branch master https://github.com/ceccocats/tkDNN.git
+ARG TTAG=v0.7
+RUN git clone --depth 1 --branch ${TTAG} https://github.com/ceccocats/tkDNN.git
 
 RUN mkdir tkDNN/build
 COPY ./tkdnn_build tkDNN/build
+COPY ./darknet darknet
 COPY ./Makefile Makefile
 COPY ./demoConfig.yml tkDNN/build/demoConfig.yml
+COPY ./demo.cpp tkdNN/demo/demo/demo.cpp
 
 ENTRYPOINT export DISPLAY=:1 && /bin/bash

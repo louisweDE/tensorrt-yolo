@@ -33,30 +33,24 @@ RUN git clone --depth 1 --branch ${CVTAG} https://github.com/opencv/opencv.git \
     && git clone --depth 1 --branch ${CVTAG} https://github.com/opencv/opencv_contrib.git \
     && mkdir opencv_build
 
-#WORKDIR /usr/local/src/opencv_build
-#COPY ./opencv3/OpenCV-*-aarch64.sh /tmp/OpenCV-*-aarch64.sh
-#RUN /tmp/OpenCV-*-aarch64.sh --skip-license --prefix=/usr/local \
-#    && rm /tmp/OpenCV-*-aarch64.sh
 
 # TKDNN
 WORKDIR /usr/local/src
-ARG TTAG=master
+
+ARG TTAG=v0.7
+
 RUN git clone --depth 1 --branch ${TTAG} https://github.com/ceccocats/tkDNN.git \
     && mkdir -p tkDNN/build
 
-#WORKDIR /usr/local/src/tkdnn_build
-#RUN cmake \
-#    -G Ninja \
-#    -D CMAKE_INSTALL_PREFIX=/usr/local/tkdnn \
-#    /usr/local/src/tkdnn
-#RUN ninja -j$(nproc) \
-#    && ninja install -j$(nproc)
-
 RUN mkdir /usr/local/opencv
 
-#COPY ./demo.cpp /usr/local/src/tkDNN/demo/demo/demo.cpp
-#COPY ./demoConfig.yml /usr/local/src/tkDNN/build/demoConfig.yml
-COPY ./Makefile Makefile
+COPY ./demo.cpp /usr/local/src/tkDNN/demo/demo/demo.cpp
+COPY ./darknetToTensorRt.cpp /usr/local/src/tkDNN/tests/darknet/darknetToTensorRt.cpp
 
-#RUN wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.7/ZED_SDK_Tegra_L4T32.7_v3.7.1.run
-#RUN chmod +x ZED_SDK_Tegra_L4T32.7_v3.7.1.run && ./ZED_SDK_Tegra_L4T32.7_v3.7.1.run -- silent
+# Darknet
+
+RUN git clone https://git.hipert.unimore.it/fgatti/darknet.git
+
+# Copy Makefile+
+
+COPY ./Makefile Makefile

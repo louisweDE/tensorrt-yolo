@@ -36,14 +36,3 @@ RUN apt-get update -y && apt-get install --no-install-recommends python3 python3
 RUN ln -sf /usr/lib/aarch64-linux-gnu/tegra/libv4l2.so.0 /usr/lib/aarch64-linux-gnu/libv4l2.so
 
 WORKDIR /usr/local/zed
-
-
-#RUN cd /root && \
-#    git clone https://github.com/AlexeyAB/darknet && \
-#    cd darknet && \
-#    sed -i 's/GPU=0/GPU=1/; s/CUDNN=0/CUDNN=1/; s/OPENCV=0/OPENCV=1/; s/LIBSO=0/LIBSO=1/; s/ZED_CAMERA=0/ZED_CAMERA=1/' Makefile && \
-#    wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights
-#
-#WORKDIR darknet
-#
-#RUN make
