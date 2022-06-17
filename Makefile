@@ -95,10 +95,6 @@ buildRuntime:
 	@echo "build runtime"
 	docker build . -t tensorrt-yolo -f DockerfileRuntime
 
-pullRuntime:
-	docker pull louiswe/tensorrt-yolo:latest
-	docker tag louiswe/tensorrt-yolo:latest tensorrt-yolo
-
 configureForTx2:
 	sed -i 's/\/dev\/video0/\/dev\/video1/g' Makefile
 	sed -i 's/\/dev\/video0/\/dev\/video1/g' demoConfig.yml
