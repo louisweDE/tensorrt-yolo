@@ -31,4 +31,5 @@ COPY ./Makefile Makefile
 COPY ./demoConfig.yml tkDNN/build/demoConfig.yml
 COPY ./demo.cpp tkdNN/demo/demo/demo.cpp
 
+# Setzen der DISPLAY Variavle und öfnnen einer Bash Konsole
 ENTRYPOINT export DISPLAY=:1 && /bin/bash
