@@ -49,7 +49,12 @@ COPY ./darknetToTensorRt.cpp /usr/local/src/tkDNN/tests/darknet/darknetToTensorR
 
 # Darknet
 
+# commit hash
+ARG DTAG=f547f4feb26b6f70c4a43177476191386b22ec1b
+
 RUN git clone https://git.hipert.unimore.it/fgatti/darknet.git
+# reset to specific commit because no tags given 
+RUN cd darknet && git reset --hard $(DTAG)
 
 # Copy Makefile+
 
